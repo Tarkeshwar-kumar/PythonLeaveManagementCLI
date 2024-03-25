@@ -1,0 +1,4 @@
+mysql-connector-python==8.3.0
+pyfiglet==1.0.2
+clint==0.5.1
+SQLAlchemy==2.0.29

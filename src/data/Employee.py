@@ -14,5 +14,6 @@ class Employee:
     middle_name: Optional[list[str]]
     last_name: str
     email: str
+    leave_stats: LeaveStats
     
 
