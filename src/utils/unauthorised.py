@@ -16,7 +16,7 @@ def display_options() -> None:
 def user_action():
     option = input()
     if option == 'A':
-        form = create_form()
+        create_form()
     elif option == 'B':
         sys.exit()
     else:
