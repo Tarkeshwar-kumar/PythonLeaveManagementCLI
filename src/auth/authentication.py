@@ -1,13 +1,12 @@
-from data.Credentals import Credential
-from data.Employee import Employee
-from db.Connector import MySQL
+from db.Employee import Employees, Credentials, session, connection
 from exceptions.exceptions import NotAuthoriseError
+from clint.textui import puts, colored
+from sqlalchemy import text, Select
 
-def authenticate_user(cred: Credential) -> Employee:
-    with MySQL() as connection:
-        cur = connection.cursor()
-        cur.execute(f"SELECT * from Credentials where email_id='{cred.email_id}' and password='{cred.password}';")
-        result = cur.fetchall()
-        print(result)
-        if result == list([]):
-            raise NotAuthoriseError("Please signup to access portal")
+def authenticate_user(credential: Credentials) -> Employees:
+    try:
+        result = connection.execute(
+            text(f"SELECT * FROM Credentials WHERE email_id={credential.email_id} and password={credential.password};")
+        )
+    except:
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')

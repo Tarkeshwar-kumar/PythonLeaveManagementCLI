@@ -1,57 +1,58 @@
-from data.Credentals import Credential
-from auth.authentication import authenticate_user
-from exceptions.exceptions import NotAuthoriseError
-from db.crud_operations import *
 from clint.textui import puts, colored
 from pyfiglet import Figlet
- 
-def get_user_credential():
-    
+from exceptions.exceptions import NotAuthoriseError
+from db.Employee import Employees, Credentials, Address, LeaveStats, session, Base, engine
+from auth.authentication import *
+from utils.unauthorised import display_options
+
+
+# emp1 = Employees(
+#     first_name = "Tarak",
+#     last_name = "kumar",
+# )
+
+# leave1 = LeaveStats(
+#     type = "sick leave",
+#     applied = 10,
+#     total = 15,
+# )
+# emp1.leave_status.append(leave1)
+
+# session.add(emp1)
+# session.commit()
+
+# print(emp1)
+# print(emp1.leave_status)
+
+def get_credential() -> Credentials:
     email = input(colored.yellow('Enter your email address: '))
     password = input(colored.yellow('Enter your password: '))
-    credential = Credential(
+    credential = Credentials(
         email_id = email,
         password = password
     )
     return credential
 
-def create_employee():
-    email = input(colored.yellow('Enter your email address: '))
-    password = input(colored.yellow('Enter your password: '))
-    first_name = input(colored.yellow('Enter your first name: '))
-    middle_name = input(colored.yellow('Enter your middle name: '))
-    last_name = input(colored.yellow('Enter your last name: '))
-    
-    employee = Employee (
-        first_name= first_name,
-        middle_name= middle_name,
-        last_name= last_name,
-        email= email
-    )
-    credential = Credential (
-        email_id= email,
-        password= password
-    )
-    return employee, credential
-
-def Application() -> None:
+def welcome() -> None:
+    f = Figlet(font='big')
+    print(f.renderText('EMPLOYEE PORTAL'))
     puts(colored.blue('WELCOME TO LEAVE MANAGEMENT SYSTEM'))
-    puts(colored.red('Please login to access portal'))
-    credential = get_user_credential()
 
+def login() -> Credentials:
+    puts(colored.red('Please login to access portal'))
+    credential = get_credential()
+    authenticate(credential)
+
+def authenticate(credential : Credentials) -> None :
     try:
         employee = authenticate_user(credential)  
     except NotAuthoriseError as exception:
-        print(exception)
-        employee, credential = create_employee()
-        insert_employee(employee)
-        insert_emp_credentials(credential)
+        puts(colored.red('You are not authrised, please raise a request to register'))
+        display_options()
     else:
-        colored.green('Congratulations you are logged in')
+        puts(colored.green(f'Congratulations you are logged in as {employee.position}'))
 
-    
-if __name__ == "Application":
-    print(__name__)
-    f = Figlet(font='big')
-    print(f.renderText('EMPLOYEE PORTAL'))
-    Application()
+
+welcome()
+Base.metadata.create_all(engine)
+login()
