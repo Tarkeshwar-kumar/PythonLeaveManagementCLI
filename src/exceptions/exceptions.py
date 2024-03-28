@@ -9,3 +9,6 @@ class NotAuthoriseError(CustomException):
 
 class SQSSendMessageError(CustomException):
     pass
+
+class SQSGetMessageError(CustomException):
+    pass
