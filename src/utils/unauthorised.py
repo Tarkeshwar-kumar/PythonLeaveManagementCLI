@@ -2,6 +2,7 @@ from clint.textui import puts, colored
 import json
 from aws_services.sqs.sqs import submit_request
 from exceptions.exceptions import SQSSendMessageError
+import sys
 options = {
     "A": "Raise a request",
     "B": "Leave the application"
@@ -16,6 +17,10 @@ def user_action():
     option = input()
     if option == 'A':
         form = create_form()
+    elif option == 'B':
+        sys.exit()
+    else:
+        print("WRONG INPUT")
 
 def create_form() -> dict:
     email = input(colored.yellow('Enter your email address: '))
