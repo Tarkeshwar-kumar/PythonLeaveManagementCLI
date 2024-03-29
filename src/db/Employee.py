@@ -56,3 +56,4 @@ class Employees(Base):
         return f"<Employee(id={self.id}, firstname={self.first_name}, lastname = {self.last_name})>"
 
 
+Base.metadata.create_all(engine)

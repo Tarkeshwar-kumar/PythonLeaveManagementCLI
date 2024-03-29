@@ -1,4 +1,4 @@
-from features import *
+from utils.features import *
 from clint.textui import puts, colored
 
 def choose_features(role= "unauthorised"):
@@ -13,6 +13,6 @@ def choose_features(role= "unauthorised"):
     else:
         display_options(unothorised_features)
 
-def display_options(options) -> None:
-    for option in options:
-        puts(colored.blue(option+ " -> "+ options[option]))
+def display_options(features) -> None:
+    for option in features:
+        puts(colored.blue(option+ " -> "+ features[option]))

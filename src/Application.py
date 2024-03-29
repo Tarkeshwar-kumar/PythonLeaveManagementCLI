@@ -11,6 +11,8 @@ from utils.features import *
 # emp1 = Employees(
 #     first_name = "Tarak",
 #     last_name = "kumar",
+#     position = "Developer",
+#     email_address = "ktarkeshwar305@gmail.com"
 # )
 
 # leave1 = LeaveStats(
@@ -18,9 +20,55 @@ from utils.features import *
 #     applied = 10,
 #     total = 15,
 # )
+
+# address1 = Address(
+#     flat_number = 38, 
+#     sector = 10,
+#     city = "Ujjain",
+#     state = "Ujjain",
+#     country = "India"
+# )
+
+# emp2 = Employees(
+#     first_name = "Chelsi",
+#     last_name = "Goyal",
+#     position = "Admin",
+#     email_address = "goyal@gmail.com"
+# )
+
+# leave2 = LeaveStats(
+#     type = "Casual leave",
+#     applied = 10,
+#     total = 15,
+# )
+
+# address2 = Address(
+#     flat_number = 38, 
+#     sector = 10,
+#     city = "Ujjain",
+#     state = "Ujjain",
+#     country = "India"
+# )
+
+# cred1 = Credentials(
+#     email_id = "ktarkeshwar305@gmail.com",
+#     password = "12345"
+# )
+
+# cred2 = Credentials(
+#     email_id = "goyal@gmail.com",
+#     password = "12345"
+# )
 # emp1.leave_status.append(leave1)
+# emp1.address.append(address1)
+# emp1.credential.append(cred1)
+
+# emp2.leave_status.append(leave2)
+# emp2.address.append(address2)
+# emp2.credential.append(cred2)
 
 # session.add(emp1)
+# session.add(emp2)
 # session.commit()
 
 # print(emp1)
@@ -47,15 +95,14 @@ def login() -> Credentials:
 
 def authenticate(credential : Credentials) -> None :
     try:        
-        employee = authenticate_user(credential)  
+        position = authenticate_user(credential)  
     except NotAuthoriseError as exception:
         puts(colored.red('You are not authrised, please raise a request to register'))
     else:
-        puts(colored.green(f'Congratulations you are logged in as {employee.position}'))
+        puts(colored.green(f'Congratulations you are logged in as {position}'))
     finally:
-        choose_features(employee.position)
+        choose_features(position)
 
 
 welcome()
-Base.metadata.create_all(engine)
 login()
