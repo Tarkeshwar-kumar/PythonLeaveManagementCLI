@@ -3,15 +3,6 @@ import json
 from aws_services.sqs.sqs import submit_request
 from exceptions.exceptions import SQSSendMessageError
 import sys
-options = {
-    "A": "Raise a request",
-    "B": "Leave the application"
-}
-
-def display_options() -> None:
-    for option in options:
-        puts(colored.blue(option+ " -> "+ options[option]))
-    user_action()
     
 def user_action():
     option = input()
@@ -47,7 +38,6 @@ def create_form() -> dict:
             "country": country
         }
     json_emp_details = json.dumps(employee_details)
-    # submit_request(json_emp_details)
     try:
         submit_request(json_emp_details)
     except SQSSendMessageError as error:

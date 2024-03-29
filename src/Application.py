@@ -3,7 +3,9 @@ from pyfiglet import Figlet
 from exceptions.exceptions import NotAuthoriseError
 from db.Employee import Employees, Credentials, Address, LeaveStats, session, Base, engine
 from auth.authentication import *
-from utils.unauthorised import display_options
+from utils.adapter import choose_features
+from utils.features import *
+
 
 
 # emp1 = Employees(
@@ -44,13 +46,14 @@ def login() -> Credentials:
     authenticate(credential)
 
 def authenticate(credential : Credentials) -> None :
-    try:
+    try:        
         employee = authenticate_user(credential)  
     except NotAuthoriseError as exception:
         puts(colored.red('You are not authrised, please raise a request to register'))
-        display_options()
     else:
         puts(colored.green(f'Congratulations you are logged in as {employee.position}'))
+    finally:
+        choose_features(employee.position)
 
 
 welcome()
