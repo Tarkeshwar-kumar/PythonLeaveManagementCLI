@@ -95,7 +95,8 @@ def login() -> Credentials:
 
 def authenticate(credential : Credentials) -> None :
     try:        
-        position = authenticate_user(credential)  
+        employee = authenticate_user(credential)  
+        position = get_role(credential.email_id)
     except NotAuthoriseError as exception:
         puts(colored.red('You are not authrised, please raise a request to register'))
     else:

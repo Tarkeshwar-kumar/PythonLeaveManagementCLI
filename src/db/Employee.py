@@ -17,7 +17,7 @@ class LeaveStats(Base):
     type = Column(String)
     applied = Column(Integer)
     total = Column(Integer)
-    emp_id  = Column(ForeignKey('Employees.id'))
+    emp_email  = Column(ForeignKey('Employees.email_address'))
 
     def __repr__(self) -> str:
         return f"<Leaves(type={self.type}, applied={self.applied}, total={self.total})>"
@@ -31,7 +31,7 @@ class Address(Base):
     city = Column(String)
     state = Column(String)
     country = Column(String)
-    emp_id = Column(ForeignKey('Employees.id'))
+    emp_email = Column(ForeignKey('Employees.email_address'))
 
 
 class Credentials(Base):
@@ -39,21 +39,20 @@ class Credentials(Base):
     id = Column(Integer, primary_key=True)
     email_id = Column(String)
     password = Column(String)
-    emp_id = Column(ForeignKey('Employees.id'))
+    emp_email = Column(ForeignKey('Employees.email_address'))
 
 class Employees(Base):
     __tablename__ = "Employees"
-    id = Column(Integer, primary_key=True)
     first_name = Column(String)
     last_name = Column(String)
     position = Column(String)
-    email_address = Column(String)
+    email_address = Column(String, primary_key=True)
     leave_status = relationship(LeaveStats)
     address = relationship(Address)
     credential = relationship(Credentials)
 
     def __repr__(self) -> str:
-        return f"<Employee(id={self.id}, firstname={self.first_name}, lastname = {self.last_name})>"
+        return f"<Employee(id={self.email_address}, firstname={self.first_name}, lastname = {self.last_name})>"
 
 
 Base.metadata.create_all(engine)
