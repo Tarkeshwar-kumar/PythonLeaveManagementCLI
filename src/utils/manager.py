@@ -2,7 +2,7 @@ from clint.textui import puts, colored
 import sys
 
 
-def choose_action():
+def manager_action():
     action = input(colored.yellow('Choose action'))
     if action  == 'A':
         pass

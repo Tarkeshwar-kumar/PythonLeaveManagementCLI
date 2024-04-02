@@ -102,7 +102,7 @@ def authenticate(credential : Credentials) -> None :
     else:
         puts(colored.green(f'Congratulations you are logged in as {position}'))
     finally:
-        choose_features(position)
+        choose_features(credential.email_id, position)
 
 
 welcome()

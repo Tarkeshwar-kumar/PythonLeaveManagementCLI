@@ -25,13 +25,22 @@ def delete_employee(email_id : Credentials.email_id):
     else:
         pass
 
-def get_leave_stats(email_id : Credentials.email_id):
+def get_leave_stats(email_address):
     try:
         result = connection.execute(
-            text(f'SELECT * FROM LeaveStats WHERE id="{email_id}";')
+            text(f'SELECT * FROM LeaveStats WHERE emp_email="{email_address}";')
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass
 
+def apply_for_leave(leave_type, number_of_leaves, email_address):
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveStats SET applied={number_of_leaves} WHERE type="{leave_type}" and emp_email="{email_address}";')
+        )
+    except:
+        pass
+    else:
+        pass
