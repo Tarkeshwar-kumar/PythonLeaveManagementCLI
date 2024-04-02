@@ -8,7 +8,7 @@ from clint.textui import puts, colored
 def choose_features(email, role= "unauthorised"):
     if role == "Manager":
         display_options(manager_features)
-        manager_action()
+        manager_action(email)
     elif role == "Developer":
         display_options(developer_features)
         developer_action(email)

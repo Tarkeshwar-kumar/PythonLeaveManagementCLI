@@ -44,3 +44,23 @@ def apply_for_leave(leave_type, number_of_leaves, email_address):
         pass
     else:
         pass
+
+def approve_leave(email_address, leave_id):
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveStats SET total=total- applied, applied={0} WHERE type="{leave_id}" and emp_email="{email_address}";')
+        )
+    except:
+        pass
+    else:
+        pass
+
+def reject_leave(email_address, leave_id):
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveStats SET total=total- applied, applied={0} WHERE type="{leave_id}" and emp_email="{email_address}";')
+        )
+    except:
+        pass
+    else:
+        pass

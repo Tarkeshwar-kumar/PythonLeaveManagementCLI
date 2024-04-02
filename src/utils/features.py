@@ -14,9 +14,8 @@ developer_features = {
 manager_features = {
     "A": "See my details",
     "B": "See leave statistics",
-    "C": "See applied leaves",
-    "D": "Approve leaves",
-    "E": "Reject leaves"
+    "C": "Approve leaves",
+    "D": "Reject leaves"
 }
 
 unothorised_features = {
