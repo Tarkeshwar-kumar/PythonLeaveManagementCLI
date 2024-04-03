@@ -1,4 +1,4 @@
-from sqlalchemy import String, ForeignKey, create_engine, MetaData, Column, Integer
+from sqlalchemy import String, ForeignKey, create_engine, MetaData, Column, Integer, DateTime
 from sqlalchemy.orm import DeclarativeBase, sessionmaker, declarative_base, relationship
 
 meta = MetaData()
@@ -11,12 +11,13 @@ connection = engine.connect()
 class Base(DeclarativeBase):
     pass
 
-class LeaveStats(Base):
-    __tablename__ = "LeaveStats"
-    status_id = Column(Integer, primary_key=True)
+class LeaveRecord(Base):
+    __tablename__ = "LeaveRecord"
+    leave_id = Column(Integer, primary_key=True)
     type = Column(String)
-    applied = Column(Integer)
-    total = Column(Integer)
+    status = Column(Integer)
+    from_date = Column(DateTime)
+    till_date = Column(DateTime)
     emp_email  = Column(ForeignKey('Employees.email_address'))
 
     def __repr__(self) -> str:
@@ -47,7 +48,7 @@ class Employees(Base):
     last_name = Column(String)
     position = Column(String)
     email_address = Column(String, primary_key=True)
-    leave_status = relationship(LeaveStats)
+    leave_status = relationship(LeaveRecord)
     address = relationship(Address)
     credential = relationship(Credentials)
 
