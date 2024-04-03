@@ -1,59 +1,10 @@
 from utils.mapping import features
-from utils.admin import admin_choose_action
-from utils.developers import developer_action
-from utils.manager import manager_action
-from utils.unauthorised import user_action
 from clint.textui import puts, colored
-from abc import ABC, abstractstaticmethod
 from model.dbOperations import get_employee, delete_employee, get_leave_stats, approve_leave, reject_leave
 from validators.validate import is_valid_leave_request
 from model.dbOperations import get_employee, get_leave_stats, apply_for_leave
+from factory.factory import DeveloperFactory, AdminFactory, ManagerFactory, UnauthorisedUserFactory
 
-class Employee:
-    def __init__(self, email_id) -> None:
-        self.email_id = email_id
-
-    def action(self):
-        pass
-
-class Developer(Employee):
-    def action(self):
-        print(self.email_id)
-        developer_action(self.email_id)
-
-class Admin(Employee):
-    def action(self):
-        admin_choose_action()
-
-class Manager(Employee):
-    def action(self):
-        manager_action()
-
-class Unauthorised(Employee):
-    def action(self):
-        user_action()
-
-class EmployeeFactory(ABC):
-    @abstractstaticmethod
-    def create_employee(self):
-        pass
-
-class ManagerFactory(EmployeeFactory):
-    def create_employee(self, email_id):
-        return Manager(email_id)
-
-class AdminFactory(EmployeeFactory):
-    def create_employee(self, email_id):
-        return Admin(email_id)
-
-class DeveloperFactory(EmployeeFactory):
-    def create_employee(self, email_id):
-        return Developer(email_id)
-
-class UnauthorisedUserFactory(EmployeeFactory):
-    def create_employee(self, email_id):
-        return Unauthorised(email_id)
-    
 class AdminAction():
     @staticmethod
     def see_emp_details(email_address):
