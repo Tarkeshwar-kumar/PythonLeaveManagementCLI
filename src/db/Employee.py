@@ -42,12 +42,20 @@ class Credentials(Base):
     password = Column(String)
     emp_email = Column(ForeignKey('Employees.email_address'))
 
+class Manager:
+    __tablename__ = "Manager"
+    first_name = Column(String)
+    last_name = Column(String)
+    email_address = Column(String, primary_key=True)
+    emp_email = Column(ForeignKey('Employees.email_address'))
+
 class Employees(Base):
     __tablename__ = "Employees"
     first_name = Column(String)
     last_name = Column(String)
     position = Column(String)
     email_address = Column(String, primary_key=True)
+    manager_id = relationship(Manager)
     leave_status = relationship(LeaveRecord)
     address = relationship(Address)
     credential = relationship(Credentials)

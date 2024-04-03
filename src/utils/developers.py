@@ -13,6 +13,10 @@ def developer_action(email_address):
         PrivateAction.apply_for_leaves(email_address)
     elif action == 'D':
         PrivateAction.cancel_applied_leaves(email_address)
+    elif action == 'E':
+        PrivateAction.modify_peronal_details(email_address)
+    elif action == 'F':
+        PrivateAction.modify_address_details(email_address)
     else:
         puts(colored.blue("Choosen invalid option"))
         sys.exit()

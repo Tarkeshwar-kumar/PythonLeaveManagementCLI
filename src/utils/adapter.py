@@ -36,6 +36,19 @@ class AdminAction():
         delete_employee(email_address)
         puts(colored.blue("Employee removed"))
 
+    @staticmethod
+    def refresh_leave_records():
+        pass
+
+    @staticmethod
+    def revoke_leave():
+        pass
+
+    @staticmethod
+    def change_manager():
+        pass
+
+
 class PrivateAction():
     @staticmethod
     def see_personal_details(email_address):
@@ -60,7 +73,11 @@ class PrivateAction():
         puts(colored.blue(employee_info))
 
     @staticmethod
-    def modify_peronal_details():
+    def modify_peronal_details(email_address):
+        pass
+
+    @staticmethod
+    def modify_address_details(email_address):
         pass
 
 role_factory_mapping = {

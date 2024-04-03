@@ -5,7 +5,9 @@ features = {
         "C": "See leave statistics", #admin
         "D": "Approve leaves",  #admin
         "E": "Reject leaves", #admin
-        "F": "Revoke granted leaves"
+        "F": "Revoke granted leaves",
+        "G": "Modify personal details",
+        "H": "Modify address details"
     },
     "Admin" : {
         "A": "See employee details",#admin
@@ -15,7 +17,8 @@ features = {
         "E": "Add employee",
         "F": "Remove employee",
         "G": "Revoke granted leaves",
-        "H": "Change manager of employee"
+        "H": "Change manager of employee",
+        "I": "Refresh leave details"
     },
     "Developer": {
         "A": "See my details",
