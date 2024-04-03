@@ -1,0 +1,7 @@
+src/database.db
+src/__pycache__/
+src/auth/__pycache__/
+src/aws_services/sqs/__pycache__/
+sqs/constants/__pycache__/
+
+

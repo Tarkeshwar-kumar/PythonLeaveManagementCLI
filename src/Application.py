@@ -4,7 +4,7 @@ from exceptions.exceptions import NotAuthoriseError
 from db.Employee import Employees, Credentials, Address, LeaveStats, session, Base, engine
 from auth.authentication import *
 from utils.adapter import choose_features
-from utils.magging import *
+from utils.mapping import *
 
 def get_credential() -> Credentials:
     email = input(colored.yellow('Enter your email address: '))
