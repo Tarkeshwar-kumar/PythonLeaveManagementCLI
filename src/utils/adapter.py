@@ -56,7 +56,7 @@ class UnauthorisedUserFactory(EmployeeFactory):
     
 class AdminAction():
     @staticmethod
-    def see_emp_details():
+    def see_emp_details(email_address):
         email_address = input(colored.yellow('Enter email address of the employee to get information'))
         employee_info = get_employee(email_address)
         puts(colored.blue(employee_info))
