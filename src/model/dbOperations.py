@@ -3,8 +3,6 @@ from exceptions.exceptions import NotAuthoriseError
 from clint.textui import puts, colored
 from sqlalchemy import text, Select
 
-
-
 def get_employee(email_id: Credentials.email_id):
     try:
         result = connection.execute(

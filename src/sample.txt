@@ -1,68 +1,76 @@
+manager1 = Manager(
+    first_name = "David",
+    last_name = "Morin",
+    email_address = "david@hp.com"
+)
+emp1 = Employees(
+    first_name = "Tarak",
+    last_name = "kumar",
+    position = "Developer",
+    email_address = "ktarkeshwar305@gmail.com"
+)
+
+leave1 = LeaveRecord(
+    type = "sick leave",
+    status = "APPLIED",
+    from_date = datetime.datetime(year=2024, month=4, day=10),
+    till_date = datetime.datetime(year=2024, month=4, day=20),
+)
+
+address1 = Address(
+    flat_number = 38, 
+    sector = 10,
+    city = "Ujjain",
+    state = "Ujjain",
+    country = "India"
+)
 
 
 
-# emp1 = Employees(
-#     first_name = "Tarak",
-#     last_name = "kumar",
-#     position = "Developer",
-#     email_address = "ktarkeshwar305@gmail.com"
-# )
+emp2 = Employees(
+    first_name = "Chelsi",
+    last_name = "Goyal",
+    position = "Admin",
+    email_address = "goyal@gmail.com"
+)
 
-# leave1 = LeaveStats(
-#     type = "sick leave",
-#     applied = 10,
-#     total = 15,
-# )
+leave2 = LeaveRecord(
+    type = "Casual leave",
+    status = "APPLIED",
+    from_date = datetime.datetime(year=2024, month=4, day=10),
+    till_date = datetime.datetime(year=2024, month=4, day=20),
+)
 
-# address1 = Address(
-#     flat_number = 38, 
-#     sector = 10,
-#     city = "Ujjain",
-#     state = "Ujjain",
-#     country = "India"
-# )
+address2 = Address(
+    flat_number = 38, 
+    sector = 10,
+    city = "Ujjain",
+    state = "Ujjain",
+    country = "India"
+)
 
-# emp2 = Employees(
-#     first_name = "Chelsi",
-#     last_name = "Goyal",
-#     position = "Admin",
-#     email_address = "goyal@gmail.com"
-# )
+cred1 = Credentials(
+    email_id = "ktarkeshwar305@gmail.com",
+    password = "12345"
+)
 
-# leave2 = LeaveStats(
-#     type = "Casual leave",
-#     applied = 10,
-#     total = 15,
-# )
+cred2 = Credentials(
+    email_id = "goyal@gmail.com",
+    password = "12345"
+)
+emp1.leave_status.append(leave1)
+emp1.address.append(address1)
+emp1.credential.append(cred1)
+emp1.manager_id.append(manager1)
 
-# address2 = Address(
-#     flat_number = 38, 
-#     sector = 10,
-#     city = "Ujjain",
-#     state = "Ujjain",
-#     country = "India"
-# )
+emp2.leave_status.append(leave2)
+emp2.address.append(address2)
+emp2.credential.append(cred2)
+emp2.manager_id.append(manager1)
 
-# cred1 = Credentials(
-#     email_id = "ktarkeshwar305@gmail.com",
-#     password = "12345"
-# )
+session.add(emp1)
+session.add(emp2)
+session.commit()
 
-# cred2 = Credentials(
-#     email_id = "goyal@gmail.com",
-#     password = "12345"
-# )
-# emp1.leave_status.append(leave1)
-# emp1.address.append(address1)
-# emp1.credential.append(cred1)
-
-# emp2.leave_status.append(leave2)
-# emp2.address.append(address2)
-# emp2.credential.append(cred2)
-
-# session.add(emp1)
-# session.add(emp2)
-# session.commit()
-
-# print(emp1)
-# print(emp1.leave_status)
+print(emp1)
+print(emp1.leave_status)
