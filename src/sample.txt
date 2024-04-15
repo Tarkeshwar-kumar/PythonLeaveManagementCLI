@@ -61,16 +61,17 @@ cred2 = Credentials(
 emp1.leave_status.append(leave1)
 emp1.address.append(address1)
 emp1.credential.append(cred1)
-emp1.manager_id.append(manager1)
+manager1.emp_id.append(emp1)
 
 emp2.leave_status.append(leave2)
 emp2.address.append(address2)
 emp2.credential.append(cred2)
-emp2.manager_id.append(manager1)
-
+manager1.emp_id.append(emp2)
 session.add(emp1)
 session.add(emp2)
+session.add(manager1)
 session.commit()
 
 print(emp1)
-print(emp1.leave_status)
+print("manager - > ", emp1.manager_email)
+print("emp2", emp2.manager_email)

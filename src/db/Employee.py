@@ -42,12 +42,7 @@ class Credentials(Base):
     password = Column(String)
     emp_email = Column(ForeignKey('Employees.email_address'))
 
-class Manager(Base):
-    __tablename__ = "Manager"
-    first_name = Column(String)
-    last_name = Column(String)
-    email_address = Column(String, primary_key=True)
-    emp_email = Column(ForeignKey('Employees.email_address'))
+
 
 class Employees(Base):
     __tablename__ = "Employees"
@@ -55,7 +50,7 @@ class Employees(Base):
     last_name = Column(String)
     position = Column(String)
     email_address = Column(String, primary_key=True)
-    manager_id = relationship(Manager)
+    manager_email = Column(ForeignKey('Manager.email_address'))
     leave_status = relationship(LeaveRecord)
     address = relationship(Address)
     credential = relationship(Credentials)
@@ -63,5 +58,11 @@ class Employees(Base):
     def __repr__(self) -> str:
         return f"<Employee(id={self.email_address}, firstname={self.first_name}, lastname = {self.last_name})>"
 
+class Manager(Base):
+    __tablename__ = "Manager"
+    first_name = Column(String)
+    last_name = Column(String)
+    email_address = Column(String, primary_key=True)
+    emp_id = relationship(Employees)
 
 Base.metadata.create_all(engine)
