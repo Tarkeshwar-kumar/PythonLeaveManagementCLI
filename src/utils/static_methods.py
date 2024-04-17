@@ -5,37 +5,60 @@ import datetime
 from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
 from db.Employee import Employees, Address, Credentials, LeaveRecord, LeaveStats, Manager
 import json
+from exceptions.exceptions import NoSuchEmployeeError
 
 class AdminAction():
     @staticmethod
     def see_emp_details():
         email_address = input(colored.yellow('Enter email address of the employee to get information'))
-        employee_info = get_employee(email_address)
-        print(employee_info)
+        try:
+            employee_info = get_employee(email_address)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            print(employee_info)
     
     @staticmethod
     def see_emp_leave_record():
         email_address = input(colored.yellow('Enter email address of employee '))
-        employee_info = get_leave_record(email_address)
-        print(employee_info)
+        try:
+            leave_record = get_leave_record(email_address)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            print(leave_record)
 
     @staticmethod
     def approve_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
-        leave_type = input(colored.yellow('Enter leave id '))
-        approve_leave(email_address, leave_type)
+        leave_type = input(colored.yellow('Enter leave type '))
+        try:
+            approve_leave(email_address, leave_type)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            print("Leave is approved")
 
     @staticmethod
     def reject_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
         leave_type = input(colored.yellow('Enter leave id '))
-        reject_leave(email_address, leave_type)
+        try:
+            reject_leave(email_address, leave_type)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            print("Leave is rejected")
 
     @staticmethod
     def remove_user():
         email_address = input(colored.yellow('Enter email address of the employee to remove employee'))
-        delete_employee(email_address)
-        puts(colored.blue("Employee removed"))
+        try:
+            delete_employee(email_address)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            puts(colored.blue("Employee removed"))
 
     @staticmethod
     def refresh_leave_records():
@@ -45,7 +68,12 @@ class AdminAction():
     def revoke_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
         leave_id = input(colored.yellow('Enter leave id '))
-        revoke_leave(email_address, leave_id)
+        try:
+            revoke_leave(email_address, leave_id)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            puts(colored.blue("Leave revoked"))
 
     @staticmethod
     def check_request():

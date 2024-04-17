@@ -1,5 +1,5 @@
 from db.Employee import Employees, Credentials, session, connection
-from exceptions.exceptions import NotAuthoriseError
+from exceptions.exceptions import NotAuthoriseError, NoSuchEmployeeError
 from clint.textui import puts, colored
 from sqlalchemy import text, Select
 import datetime
@@ -12,8 +12,12 @@ def get_employee(email_id: Credentials.email_id):
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
-        return result.fetchall()
-
+        employee = result.fetchall()
+        if not employee:
+            raise NoSuchEmployeeError(f"There is no employee with email id {email_id}")
+        else:
+            return employee
+        
 def delete_employee(email_id : Credentials.email_id):
     try:
         result = connection.execute(
@@ -21,8 +25,6 @@ def delete_employee(email_id : Credentials.email_id):
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
-    else:
-        pass
 
 def get_leave_record(email_address: Credentials.email_id):
     try:
@@ -32,7 +34,11 @@ def get_leave_record(email_address: Credentials.email_id):
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
-        return result.fetchall()
+        leave_record = result.fetchall()
+        if not leave_record:
+            raise NoSuchEmployeeError(f"There is no employee with email id {email_address}")
+        else:
+            return leave_record
 
 def apply_for_leave(email_address, leave_type, from_date, till_date):
     try:
@@ -40,9 +46,8 @@ def apply_for_leave(email_address, leave_type, from_date, till_date):
             text(f'UPDATE LeaveRecord SET type={leave_type}, status="APPLIED", from_date={from_date}, till_date={till_date} and emp_email="{email_address}";')
         )
     except:
-        pass
-    else:
-        pass
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+
 
 def approve_leave(email_address, leave_type):
     try:
@@ -50,9 +55,7 @@ def approve_leave(email_address, leave_type):
             text(f'UPDATE LeaveRecord SET status="APPROVED" WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
-        pass
-    else:
-        pass
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
 
 def reject_leave(email_address, leave_type):
     try:
@@ -60,7 +63,7 @@ def reject_leave(email_address, leave_type):
              text(f'UPDATE LeaveRecord SET status="REJEC"TED WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
-        pass
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass
 
@@ -70,7 +73,7 @@ def cancel_leave(email_address, leave_type):
             text(f'UPDATE LeaveRecord SET status="CANCELLED" WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
-        pass
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass
 
@@ -80,7 +83,7 @@ def revoke_leave(email_address, leave_type, from_date, till_date):
             text(f'UPDATE LeaveRecord status="REVOKED" WHERE type={leave_type}, from_date={from_date} and status=\'APPROVED\'";')
         )
     except:
-        pass
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass 
 

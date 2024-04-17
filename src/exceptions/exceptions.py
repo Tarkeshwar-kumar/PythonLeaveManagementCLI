@@ -12,3 +12,6 @@ class SQSSendMessageError(CustomException):
 
 class SQSGetMessageError(CustomException):
     pass
+
+class NoSuchEmployeeError(CustomException):
+    pass
