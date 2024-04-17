@@ -3,7 +3,7 @@ from model.dbOperations import *
 from validators.validate import is_valid_leave_request, validate_request
 import datetime
 from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
-from db.Employee import Employees, Credentials, Address, LeaveRecord, session, Base, engine, Manager, LeaveStats
+from db.Employee import Employees, Credentials, Address, session, Base, engine, Manager, LeaveStats
 import json
 from exceptions.exceptions import NoSuchEmployeeError, InValidRequest
 
