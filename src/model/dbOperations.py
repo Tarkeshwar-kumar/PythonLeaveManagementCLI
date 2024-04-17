@@ -2,6 +2,7 @@ from db.Employee import Employees, Credentials, session, connection
 from exceptions.exceptions import NotAuthoriseError
 from clint.textui import puts, colored
 from sqlalchemy import text, Select
+from validators.validate import get_leave_stats
 
 def get_employee(email_id: Credentials.email_id):
     try:
@@ -23,20 +24,20 @@ def delete_employee(email_id : Credentials.email_id):
     else:
         pass
 
-def get_leave_stats(email_address):
+def get_leave_record(email_address: Credentials.email_id):
     try:
         result = connection.execute(
-            text(f'SELECT * FROM LeaveStats WHERE emp_email="{email_address}";')
+            text(f'SELECT * FROM LeaveRecord WHERE emp_email="{email_address}";')
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass
 
-def apply_for_leave(leave_type, number_of_leaves, email_address):
+def apply_for_leave(email_address, leave_type, from_date, till_date):
     try:
         result = connection.execute(
-            text(f'UPDATE LeaveStats SET applied={number_of_leaves} WHERE type="{leave_type}" and emp_email="{email_address}";')
+            text(f'UPDATE LeaveRecord SET type={leave_type}, status="APPLIED", from_date={from_date}, till_date={till_date} and emp_email="{email_address}";')
         )
     except:
         pass
@@ -60,5 +61,35 @@ def reject_leave(email_address, leave_id):
         )
     except:
         pass
+    else:
+        pass
+
+def cancel_leave(email_address, leave_type, from_date, till_date):
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveRecord SET status="CANCELLED" WHERE type={leave_type}, from_date={from_date} and status=\'APPLIED\'";')
+        )
+    except:
+        pass
+    else:
+        pass
+
+def revoke_leave(email_address, leave_type, from_date, till_date):
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveRecord status="REVOKED" WHERE type={leave_type}, from_date={from_date} and status=\'APPROVED\'";')
+        )
+    except:
+        pass
+    else:
+        pass 
+
+def get_leave_stats(email_address, leave_type):
+    try:
+        result = connection.execute(
+            text(f'SELECT total, availed FROM LeaveStats WHERE emp_email="{email_address}" and type={leave_type};')
+        )
+    except:
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass

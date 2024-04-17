@@ -3,7 +3,7 @@ from sqlalchemy.orm import DeclarativeBase, sessionmaker, declarative_base, rela
 
 meta = MetaData()
 db_url = "sqlite:///database.db"
-engine = create_engine(db_url, echo= True)
+engine = create_engine(db_url, echo= True, query_cache_size=0)
 Session = sessionmaker(engine)
 session = Session()
 connection = engine.connect()
@@ -23,6 +23,13 @@ class LeaveRecord(Base):
     def __repr__(self) -> str:
         return f"<Leaves(type={self.type}, applied={self.status}, total={self.from_date})>"
 
+class LeaveStats(Base):
+    __tablename__ = "LeaveStats"
+    leave_stat_id = Column(Integer, primary_key=True)
+    type = Column(String)
+    total = Column(Integer)
+    availed = Column(Integer)
+    emp_email  = Column(ForeignKey('Employees.email_address'))
 
 class Address(Base):
     __tablename__ = "Address"

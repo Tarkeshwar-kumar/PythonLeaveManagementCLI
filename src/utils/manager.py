@@ -8,21 +8,13 @@ def manager_action(email_address):
     if action  == 'A':
         AdminAction.see_emp_details()
     elif action == 'B':
-        pass
+        AdminAction.see_emp_leave_record()
     elif action == 'C':
-        AdminAction.see_emp_leave_stats()
-    elif action == 'D':
         AdminAction.approve_leave()
-    elif action == 'E':
-        AdminAction.reject_leave()
     elif action == 'D':
-        AdminAction.approve_leave()
-    elif action == 'E':
         AdminAction.reject_leave()
-    elif action == "F":
-        PrivateAction.modify_peronal_details()
-    elif action == "G":
-        PrivateAction.modify_address_details()
+    elif action == 'E':
+        AdminAction.approve_leave()
     else:
         puts(colored.blue("Choosen invalid option"))
         sys.exit()
