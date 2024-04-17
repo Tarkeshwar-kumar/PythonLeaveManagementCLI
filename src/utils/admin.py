@@ -19,8 +19,6 @@ def admin_choose_action():
     elif action == 'G':
         AdminAction.revoke_leave()
     elif action == 'H':
-        AdminAction.change_manager()
-    elif action == 'I':
         AdminAction.refresh_leave_records()
     else:
         puts(colored.blue("Choosen invalid option"))

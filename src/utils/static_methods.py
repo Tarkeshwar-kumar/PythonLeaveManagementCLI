@@ -39,7 +39,7 @@ class AdminAction():
 
     @staticmethod
     def refresh_leave_records():
-        pass
+        refersh_leave_record()
 
     @staticmethod
     def revoke_leave():
@@ -88,8 +88,6 @@ def find_diffence_in_days(till_date, from_date):
 
     till = datetime.date(int(till_year), int(till_month), int(till_date))
     start = datetime.date(int(from_year), int(from_month), int(from_date))
-
-    print(till- start)
 
     return (till- start).days
 

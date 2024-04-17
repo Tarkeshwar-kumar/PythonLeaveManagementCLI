@@ -2,6 +2,7 @@ from db.Employee import Employees, Credentials, session, connection
 from exceptions.exceptions import NotAuthoriseError
 from clint.textui import puts, colored
 from sqlalchemy import text, Select
+import datetime
 
 def get_employee(email_id: Credentials.email_id):
     try:
@@ -120,8 +121,14 @@ def insert_parental_leaves(email_address):
     else:
         pass
 
-def insert_address_details():
-    pass
-
-def insert_employee_detials():
-    pass
+def refersh_leave_record():
+    now = datetime.datetime.now()
+    date_now = datetime.datetime(now.year, now.month, now.day)
+    try:
+        result = connection.execute(
+            text(f'UPDATE LeaveRecord status="AVAILED" WHERE type=\'APPROVED\' and till_date>{date_now} and status=\'APPROVED\'";')
+        )
+    except:
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    else:
+        pass
