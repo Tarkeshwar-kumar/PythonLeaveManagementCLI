@@ -1,19 +1,19 @@
 from clint.textui import puts, colored
 from model.dbOperations import get_employee, delete_employee, get_leave_record, approve_leave, reject_leave, revoke_leave, apply_for_leave, cancel_leave, get_leave_stats
 from validators.validate import is_valid_leave_request
-
+import datetime
 class AdminAction():
     @staticmethod
     def see_emp_details():
         email_address = input(colored.yellow('Enter email address of the employee to get information'))
         employee_info = get_employee(email_address)
-        puts(colored.blue(employee_info))
+        print(employee_info)
     
     @staticmethod
     def see_emp_leave_record():
         email_address = input(colored.yellow('Enter email address of employee '))
         employee_info = get_leave_record(email_address)
-        puts(colored.blue(employee_info))
+        print(employee_info)
 
     @staticmethod
     def approve_leave():
@@ -52,10 +52,12 @@ class PrivateAction():
     @staticmethod
     def apply_for_leaves(email_address):
         leave_type = input(colored.yellow('Enter leave type '))
-        from_date= input(colored.yellow('Enter starting date of leave '))
-        till_date= input(colored.yellow('Enter till date of leave '))
-        if is_valid_leave_request(email_address):
+        from_date= input(colored.yellow('Enter starting date of leave (YYYY-MM-DD)'))
+        till_date= input(colored.yellow('Enter till date of leave (YYYY-MM-DD)'))
+        number_of_days_on_leave = find_diffence_in_days(till_date, from_date)
+        if is_valid_leave_request(email_address, number_of_days_on_leave, leave_type):
             apply_for_leave(email_address, leave_type, from_date, till_date)
+        
 
     @staticmethod
     def cancel_applied_leaves(email_address):
@@ -64,5 +66,19 @@ class PrivateAction():
 
     @staticmethod
     def see_personal_leave(email_address):
-        employee_info = get_leave_stats(email_address)
-        puts(colored.blue(employee_info))
+        employee_info = get_leave_record(email_address)
+        print(employee_info)
+
+def find_diffence_in_days(till_date, from_date):
+    from_year, from_month, from_date = from_date.split("-")
+    till_year, till_month, till_date = till_date.split("-")
+
+    till = datetime.date(int(till_year), int(till_month), int(till_date))
+    start = datetime.date(int(from_year), int(from_month), int(from_date))
+
+    print(till- start)
+
+    return (till- start).days
+
+
+

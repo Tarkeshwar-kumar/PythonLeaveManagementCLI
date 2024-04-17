@@ -63,10 +63,10 @@ def reject_leave(email_address, leave_id):
     else:
         pass
 
-def cancel_leave(email_address, leave_type, from_date, till_date):
+def cancel_leave(email_address, leave_type):
     try:
         result = connection.execute(
-            text(f'UPDATE LeaveRecord SET status="CANCELLED" WHERE type={leave_type}, from_date={from_date} and status=\'APPLIED\'";')
+            text(f'UPDATE LeaveRecord SET status="CANCELLED" WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
         pass
@@ -86,7 +86,34 @@ def revoke_leave(email_address, leave_type, from_date, till_date):
 def get_leave_stats(email_address, leave_type):
     try:
         result = connection.execute(
-            text(f'SELECT total, availed FROM LeaveStats WHERE emp_email="{email_address}" and type={leave_type};')
+            text(f'SELECT total, availed FROM LeaveStats WHERE emp_email="{email_address}" and type="{leave_type}";')
+        )
+        output = result.fetchall()
+    except:
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    else:
+        return output[0][0], output[0][1]
+
+def insert_casual_leaves(email_address):
+    try:
+        result = connection.execute(
+            text(f'INSERT INTO LeaveStats VALUES("Casual Leaves", 12, 0, "{email_address}");')
+        )
+    except:
+        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    else:
+        pass 
+
+def insert_sick_leaves(email_address):
+    result = connection.execute(
+        text(f'INSERT INTO LeaveStats VALUES("Sick Leave", 10, 0, "{email_address}");')
+    )
+    
+
+def insert_parental_leaves(email_address):
+    try:
+        result = connection.execute(
+            text(f'INSERT INTO LeaveStats VALUES("Parental Leave", 30, 0, "{email_address}");')
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')

@@ -1,7 +1,7 @@
 from clint.textui import puts, colored
 from pyfiglet import Figlet
 from exceptions.exceptions import NotAuthoriseError
-from db.Employee import Employees, Credentials, Address, LeaveRecord, session, Base, engine, Manager
+from db.Employee import Employees, Credentials, Address, LeaveRecord, session, Base, engine, Manager, LeaveStats
 from auth.authentication import *
 from utils.adapter import choose_features
 from utils.mapping import *

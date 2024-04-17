@@ -1,6 +1,6 @@
 from clint.textui import puts, colored
 import sys
-
+from model.dbOperations import insert_parental_leaves, insert_casual_leaves, insert_sick_leaves
 from utils.static_methods import PrivateAction
 
 def developer_action(email_address):

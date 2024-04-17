@@ -17,6 +17,11 @@ address1 = Address(
     state = "Ujjain",
     country = "India"
 )
+stat1 = LeaveStats(
+    type = "Casual Leave",
+    total = 10,   
+    availed  = 0,
+)
 
 emp2 = Employees(
     first_name = "Chelsi",
@@ -45,6 +50,7 @@ cred2 = Credentials(
 # emp1.leave_status.append(leave1)
 emp1.address.append(address1)
 emp1.credential.append(cred1)
+emp1.leave_status.append(stat1)
 manager1.emp_id.append(emp1)
 
 # emp2.leave_status.append(leave2)
@@ -59,3 +65,4 @@ session.commit()
 print(emp1)
 print("manager - > ", emp1.manager_email)
 print("emp2", emp2.manager_email)
+

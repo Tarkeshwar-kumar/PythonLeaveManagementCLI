@@ -1,5 +1,5 @@
-leave_type = ["Sick Leave", "Casual Leave", "Marriage Leave", "Earned Leave"]
-leave_status_type = ["Availed", "Applied", "Cancelled", "Revoked", "Granted"]
+leave_type = ["Sick Leave", "Casual Leave", "Parental Leave"]
+leave_status_type = ["AVAILED", "APPLIED", "CANCELLED", "REVOKED", "APPROVED"]
 region = "ap-south-1"
 account = "642916324385"
 sqs_name = "lms_add_emp_queue"
