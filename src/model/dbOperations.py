@@ -16,7 +16,7 @@ def get_employee(email_id: Credentials.email_id):
 def delete_employee(email_id : Credentials.email_id):
     try:
         result = connection.execute(
-            text(f'DELETE FROM Employees WHERE id="{email_id}";')
+            text(f'DELETE FROM Employees WHERE email_address="{email_id}";')
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
@@ -43,20 +43,20 @@ def apply_for_leave(email_address, leave_type, from_date, till_date):
     else:
         pass
 
-def approve_leave(email_address, leave_id):
+def approve_leave(email_address, leave_type):
     try:
         result = connection.execute(
-            text(f'UPDATE LeaveStats SET total=total- applied, applied={0} WHERE type="{leave_id}" and emp_email="{email_address}";')
+            text(f'UPDATE LeaveRecord SET status="APPROVED" WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
         pass
     else:
         pass
 
-def reject_leave(email_address, leave_id):
+def reject_leave(email_address, leave_type):
     try:
         result = connection.execute(
-            text(f'UPDATE LeaveStats SET total=total- applied, applied={0} WHERE type="{leave_id}" and emp_email="{email_address}";')
+             text(f'UPDATE LeaveRecord SET status="REJEC"TED WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
     except:
         pass

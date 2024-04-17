@@ -18,14 +18,14 @@ class AdminAction():
     @staticmethod
     def approve_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
-        leave_id = input(colored.yellow('Enter leave id '))
-        approve_leave(email_address, leave_id)
+        leave_type = input(colored.yellow('Enter leave id '))
+        approve_leave(email_address, leave_type)
 
     @staticmethod
     def reject_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
-        leave_id = input(colored.yellow('Enter leave id '))
-        reject_leave(email_address, leave_id)
+        leave_type = input(colored.yellow('Enter leave id '))
+        reject_leave(email_address, leave_type)
 
     @staticmethod
     def remove_user():

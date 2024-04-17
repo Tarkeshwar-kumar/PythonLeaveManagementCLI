@@ -7,7 +7,7 @@ def admin_choose_action():
     if action  == 'A':
         AdminAction.see_emp_details()
     elif action == 'B':
-        AdminAction.see_emp_leave_stats()
+        AdminAction.see_emp_leave_record()
     elif action == 'C':
         AdminAction.approve_leave()
     elif action == 'D':
