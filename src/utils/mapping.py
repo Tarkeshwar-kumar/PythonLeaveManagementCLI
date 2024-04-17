@@ -22,7 +22,7 @@ features = {
         "C": "Apply for leaves",
         "D": "Cancel applied leaves"
     },
-    "Unauthorized": {
+    "Unauthorised": {
         "A": "Raise a request",
         "B": "Leave the application"
     }

@@ -1,7 +1,7 @@
 from clint.textui import puts, colored
 from model.dbOperations import get_employee, delete_employee
 import sys
-from utils.adapter import AdminAction, PrivateAction
+from utils.static_methods import AdminAction, PrivateAction
 def admin_choose_action():
     action = input(colored.yellow('Choose action'))
     if action  == 'A':

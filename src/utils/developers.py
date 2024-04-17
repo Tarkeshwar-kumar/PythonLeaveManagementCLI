@@ -1,7 +1,7 @@
 from clint.textui import puts, colored
 import sys
 
-from utils.adapter import PrivateAction
+from utils.static_methods import PrivateAction
 
 def developer_action(email_address):
     action = input(colored.yellow('Choose action '))

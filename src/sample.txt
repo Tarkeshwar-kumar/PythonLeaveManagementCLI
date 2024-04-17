@@ -10,13 +10,6 @@ emp1 = Employees(
     email_address = "ktarkeshwar305@gmail.com"
 )
 
-leave1 = LeaveRecord(
-    type = "sick leave",
-    status = "APPLIED",
-    from_date = datetime.datetime(year=2024, month=4, day=10),
-    till_date = datetime.datetime(year=2024, month=4, day=20),
-)
-
 address1 = Address(
     flat_number = 38, 
     sector = 10,
@@ -25,20 +18,11 @@ address1 = Address(
     country = "India"
 )
 
-
-
 emp2 = Employees(
     first_name = "Chelsi",
     last_name = "Goyal",
     position = "Admin",
     email_address = "goyal@gmail.com"
-)
-
-leave2 = LeaveRecord(
-    type = "Casual leave",
-    status = "APPLIED",
-    from_date = datetime.datetime(year=2024, month=4, day=10),
-    till_date = datetime.datetime(year=2024, month=4, day=20),
 )
 
 address2 = Address(
@@ -58,12 +42,12 @@ cred2 = Credentials(
     email_id = "goyal@gmail.com",
     password = "12345"
 )
-emp1.leave_status.append(leave1)
+# emp1.leave_status.append(leave1)
 emp1.address.append(address1)
 emp1.credential.append(cred1)
 manager1.emp_id.append(emp1)
 
-emp2.leave_status.append(leave2)
+# emp2.leave_status.append(leave2)
 emp2.address.append(address2)
 emp2.credential.append(cred2)
 manager1.emp_id.append(emp2)

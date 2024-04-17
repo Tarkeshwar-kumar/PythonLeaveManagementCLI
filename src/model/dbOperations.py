@@ -2,17 +2,16 @@ from db.Employee import Employees, Credentials, session, connection
 from exceptions.exceptions import NotAuthoriseError
 from clint.textui import puts, colored
 from sqlalchemy import text, Select
-from validators.validate import get_leave_stats
 
 def get_employee(email_id: Credentials.email_id):
     try:
         result = connection.execute(
-            text(f'SELECT * FROM Employees WHERE email_id="{email_id}";')
+            text(f'SELECT * FROM Employees WHERE email_address="{email_id}";')
         )
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
-        pass
+        return result.fetchall()
 
 def delete_employee(email_id : Credentials.email_id):
     try:
@@ -32,7 +31,7 @@ def get_leave_record(email_address: Credentials.email_id):
     except:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
-        pass
+        return result.fetchall()
 
 def apply_for_leave(email_address, leave_type, from_date, till_date):
     try:

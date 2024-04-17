@@ -58,9 +58,10 @@ class Employees(Base):
     position = Column(String)
     email_address = Column(String, primary_key=True)
     manager_email = Column(ForeignKey('Manager.email_address'))
-    leave_status = relationship(LeaveRecord)
+    leave_recore = relationship(LeaveRecord)
     address = relationship(Address)
     credential = relationship(Credentials)
+    leave_status = relationship(LeaveStats)
 
     def __repr__(self) -> str:
         return f"<Employee(id={self.email_address}, firstname={self.first_name}, lastname = {self.last_name})>"
