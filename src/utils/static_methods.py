@@ -1,7 +1,11 @@
 from clint.textui import puts, colored
-from model.dbOperations import get_employee, delete_employee, get_leave_record, approve_leave, reject_leave, revoke_leave, apply_for_leave, cancel_leave, get_leave_stats
+from model.dbOperations import *
 from validators.validate import is_valid_leave_request
 import datetime
+from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
+from db.Employee import Employees, Address, Credentials, LeaveRecord, LeaveStats, Manager
+import json
+
 class AdminAction():
     @staticmethod
     def see_emp_details():
@@ -43,6 +47,15 @@ class AdminAction():
         leave_id = input(colored.yellow('Enter leave id '))
         revoke_leave(email_address, leave_id)
 
+    @staticmethod
+    def check_request():
+        request = get_employee_request()
+        messages = request.get("Messages")
+        if not messages:
+            print("There is no request to process")
+        else:
+            process_request(request["Messages"][0]["Body"])
+        
 class PrivateAction():
     @staticmethod
     def see_personal_details(email_address):
@@ -80,5 +93,53 @@ def find_diffence_in_days(till_date, from_date):
 
     return (till- start).days
 
+def process_request(request):
+    print("A -> Create Employee")
+    print("B -> Reject request")
+    option = input("Choose option")
+    if option == "A":
+        json_request = json.loads(request)
+        create_employee(json_request)
+    else:
+        print("Request have been rejected") 
 
+def create_employee(request):
+    address = create_address_details(request)
+    employee = create_employee_detials(request)
+    cred = create_credentials(request)
 
+    employee.address.append(address)
+    employee.credential.append(cred)
+
+def create_employee_detials(message):
+    employee = Employees(
+        first_name = message['first_name'],
+        last_name = message['last_name'],
+        position = message['position'],
+        email_address = message['email']
+    )
+    return employee
+
+def create_address_details(message):
+    address = Address(
+        flat_number = message['flat_number'],
+        sector = message['sector'],
+        city = message['city'],
+        state = message['state'],
+        country = message['country']
+    )
+    return address
+
+def create_credentials(message):
+    cred = Credentials(
+        email_id = message['email'],
+        password = message['password']
+    )
+    return cred
+
+def create_manager(message):
+    manager = Manager(
+        first_name = message['first_name'],
+        last_name = message['last_name']
+    )
+    return manager

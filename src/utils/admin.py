@@ -13,7 +13,7 @@ def admin_choose_action():
     elif action == 'D':
         AdminAction.reject_leave()
     elif action == 'E':
-        pass
+        AdminAction.check_request()
     elif action == 'F':
         AdminAction.remove_user()
     elif action == 'G':

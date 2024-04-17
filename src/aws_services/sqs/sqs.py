@@ -13,11 +13,28 @@ def submit_request(message) -> Exception:
     except:
         raise SQSSendMessageError("Your request couldn't be send, check message body")
 
-def get_request() -> Exception:
+def get_employee_request() -> Exception:
     try:
         response = sqs_client.receive_message(
             QueueUrl = queue_url,
-            MaxNumberOfMessages=1
+            MaxNumberOfMessages=2
         )
+        print(response)
     except:
         raise SQSGetMessageError("Something went wrong")
+    else:
+        return response
+
+
+def delete_request_from_queue(receipt_handle):
+    try:
+        response = sqs_client.delete_message(
+            QueueUrl=queue_url,
+            ReceiptHandle=receipt_handle
+        )
+        print(response)
+    except:
+        raise SQSGetMessageError("Something went wrong")
+    else:
+        return response
+    

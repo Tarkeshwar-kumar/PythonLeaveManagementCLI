@@ -119,3 +119,9 @@ def insert_parental_leaves(email_address):
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
         pass
+
+def insert_address_details():
+    pass
+
+def insert_employee_detials():
+    pass
