@@ -1,6 +1,7 @@
 from model.dbOperations import get_leave_stats
-from constants.constants import leave_type as leave_types
+from constants.constants import leave_type as leave_types, role
 import sys
+from exceptions.exceptions import InValidRequest
 
 def is_valid_leave_request(email_address, leave_applied, leave_type) -> bool:
     if leave_type not in leave_types:
@@ -13,5 +14,9 @@ def is_valid_leave_request(email_address, leave_applied, leave_type) -> bool:
     return False
 
 
-def is_valid_manager() -> bool:
-    pass
+def validate_request(request) -> bool:
+    if request['position'] in role:
+        print("position is ", request['position'])
+        return True
+    else:
+        raise InValidRequest("Position is not invalid")

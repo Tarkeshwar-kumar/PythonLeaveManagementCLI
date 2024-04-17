@@ -17,7 +17,7 @@ def get_employee_request() -> Exception:
     try:
         response = sqs_client.receive_message(
             QueueUrl = queue_url,
-            MaxNumberOfMessages=2
+            MaxNumberOfMessages=1
         )
         print(response)
     except:

@@ -1,11 +1,11 @@
 from clint.textui import puts, colored
 from model.dbOperations import *
-from validators.validate import is_valid_leave_request
+from validators.validate import is_valid_leave_request, validate_request
 import datetime
 from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
-from db.Employee import Employees, Address, Credentials, LeaveRecord, LeaveStats, Manager
+from db.Employee import Employees, Credentials, Address, LeaveRecord, session, Base, engine, Manager, LeaveStats
 import json
-from exceptions.exceptions import NoSuchEmployeeError
+from exceptions.exceptions import NoSuchEmployeeError, InValidRequest
 
 class AdminAction():
     @staticmethod
@@ -82,7 +82,7 @@ class AdminAction():
         if not messages:
             print("There is no request to process")
         else:
-            process_request(request["Messages"][0]["Body"])
+            process_request(request['Messages'][0]['ReceiptHandle'], request["Messages"][0]["Body"])
         
 class PrivateAction():
     @staticmethod
@@ -119,15 +119,25 @@ def find_diffence_in_days(till_date, from_date):
 
     return (till- start).days
 
-def process_request(request):
+def process_request(ReceiptHandle, request):
     print("A -> Create Employee")
     print("B -> Reject request")
     option = input("Choose option")
     if option == "A":
-        json_request = json.loads(request)
-        create_employee(json_request)
+        try:
+            json_request = json.loads(request)
+            create_employee(json_request)
+        except InValidRequest as exception:
+            print("Invalid request")
+            delete_request_from_queue(ReceiptHandle)
+        except  Exception as err:
+            print(err)
+        else: 
+            puts(colored.blue("User have been created"))
+            delete_request_from_queue(ReceiptHandle)
     else:
         print("Request have been rejected") 
+        delete_request_from_queue(ReceiptHandle)
 
 def create_employee(request):
     address = create_address_details(request)
@@ -137,7 +147,11 @@ def create_employee(request):
     employee.address.append(address)
     employee.credential.append(cred)
 
+    session.add(employee)
+    session.commit()
+
 def create_employee_detials(message):
+    validate_request(message)
     employee = Employees(
         first_name = message['first_name'],
         last_name = message['last_name'],

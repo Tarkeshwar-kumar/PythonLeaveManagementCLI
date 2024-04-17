@@ -15,3 +15,6 @@ class SQSGetMessageError(CustomException):
 
 class NoSuchEmployeeError(CustomException):
     pass
+
+class InValidRequest(CustomException):
+    pass
