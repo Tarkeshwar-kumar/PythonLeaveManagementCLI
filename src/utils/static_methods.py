@@ -32,9 +32,9 @@ class AdminAction():
     @staticmethod
     def approve_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
-        leave_type = input(colored.yellow('Enter leave type '))
+        leave_id = input(colored.yellow('Enter leave type '))
         try:
-            approve_leave(email_address, leave_type)
+            approve_leave(email_address, leave_id)
         except (NoSuchEmployeeError, NotAuthoriseError) as exception:
             print(exception)
         else:
@@ -43,9 +43,9 @@ class AdminAction():
     @staticmethod
     def reject_leave():
         email_address = input(colored.yellow('Enter email address of employee '))
-        leave_type = input(colored.yellow('Enter leave id '))
+        leave_id = input(colored.yellow('Enter leave id '))
         try:
-            reject_leave(email_address, leave_type)
+            reject_leave(email_address, leave_id)
         except (NoSuchEmployeeError, NotAuthoriseError) as exception:
             print(exception)
         else:
@@ -151,7 +151,7 @@ def process_request(ReceiptHandle, request):
         else: 
             puts(colored.blue("User have been created"))
             delete_request_from_queue(ReceiptHandle)
-    if option == "B":
+    elif option == "B":
         print("Request have been rejected") 
         delete_request_from_queue(ReceiptHandle)
     else:

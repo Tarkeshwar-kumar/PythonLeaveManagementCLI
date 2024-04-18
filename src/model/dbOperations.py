@@ -53,20 +53,20 @@ def apply_for_leave(email_address, leave_type, from_date, till_date):
         connection.commit()
 
 
-def approve_leave(email_address, leave_type):
+def approve_leave(email_address, leave_id):
     try:
         connection.execute(
-            text(f'UPDATE LeaveRecord SET status="APPROVED" WHERE type="{leave_type}" and emp_email="{email_address}";')
+            text(f'UPDATE LeaveRecord SET status="APPROVED" WHERE leave_id={leave_id} and emp_email="{email_address}";')
         )
     except Exception as exception:
         print(exception)
     else:
         connection.commit()
 
-def reject_leave(email_address, leave_type):
+def reject_leave(email_address, leave_id):
     try:
         result = connection.execute(
-             text(f'UPDATE LeaveRecord SET status="REJEC"TED WHERE type="{leave_type}" and emp_email="{email_address}";')
+             text(f'UPDATE LeaveRecord SET status="REJECTED" WHERE leave_id={leave_id} and emp_email="{email_address}";')
         )
     except Exception as exception:
         print(exception)

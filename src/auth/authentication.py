@@ -19,7 +19,6 @@ def authenticate_user(credential: Credentials) -> Employees.position:
             raise NotAuthoriseError('You are not authrised, please raise a request to register')
         else:
             print("Logged in!!!")
-        
     
 def get_role(email_id):
     try:
