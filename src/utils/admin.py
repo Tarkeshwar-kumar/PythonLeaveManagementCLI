@@ -4,9 +4,9 @@ from utils.static_methods import AdminAction, PrivateAction
 def admin_choose_action():
     action = input(colored.yellow('Choose action'))
     if action  == 'A':
-        AdminAction.see_emp_details()
+        AdminAction.get_emp_details()
     elif action == 'B':
-        AdminAction.see_emp_leave_record()
+        AdminAction.get_emp_leave_records()
     elif action == 'C':
         AdminAction.approve_leave()
     elif action == 'D':

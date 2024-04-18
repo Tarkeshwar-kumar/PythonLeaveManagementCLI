@@ -11,11 +11,11 @@ def authenticate_user(credential: Credentials) -> Employees.position:
         )
         password = result.fetchall()
         print(password)
-        password = bytes.fromhex(password[0][0])
+        # password = bytes.fromhex(password[0][0])
     except Exception:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
     else:
-        if len(password) == 0 or not bcrypt.checkpw(credential.password, password):
+        if len(password) == 0 or not bcrypt.checkpw(credential.password, password[0][0]):
             raise NotAuthoriseError('You are not authrised, please raise a request to register')
         else:
             print("Logged in!!!")

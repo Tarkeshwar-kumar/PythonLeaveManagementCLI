@@ -23,8 +23,10 @@ def delete_employee(email_id : Credentials.email_id):
         result = connection.execute(
             text(f'DELETE FROM Employees WHERE email_address="{email_id}";')
         )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
+    else:
+        connection.commit()
 
 def get_leave_record(email_address: Credentials.email_id):
     try:
@@ -53,21 +55,23 @@ def apply_for_leave(email_address, leave_type, from_date, till_date):
 
 def approve_leave(email_address, leave_type):
     try:
-        result = connection.execute(
+        connection.execute(
             text(f'UPDATE LeaveRecord SET status="APPROVED" WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
+    else:
+        connection.commit()
 
 def reject_leave(email_address, leave_type):
     try:
         result = connection.execute(
              text(f'UPDATE LeaveRecord SET status="REJEC"TED WHERE type="{leave_type}" and emp_email="{email_address}";')
         )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
     else:
-        pass
+        connection.commit()
 
 def cancel_leave(email_address, leave_type):
     try:
@@ -84,10 +88,10 @@ def revoke_leave(email_address, leave_type, from_date, till_date):
         result = connection.execute(
             text(f'UPDATE LeaveRecord status="REVOKED" WHERE type={leave_type}, from_date={from_date} and status=\'APPROVED\'";')
         )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
     else:
-        pass 
+        connection.commit() 
 
 def get_leave_stats(email_address, leave_type):
     try:
@@ -96,36 +100,10 @@ def get_leave_stats(email_address, leave_type):
         )
         output = result.fetchall()
         print(output)
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
     else:
         return output[0][0], output[0][1]
-
-def insert_casual_leaves(email_address):
-    try:
-        result = connection.execute(
-            text(f'INSERT INTO LeaveStats VALUES("Casual Leaves", 12, 0, "{email_address}");')
-        )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
-    else:
-        pass 
-
-def insert_sick_leaves(email_address):
-    result = connection.execute(
-        text(f'INSERT INTO LeaveStats VALUES("Sick Leave", 10, 0, "{email_address}");')
-    )
-    
-
-def insert_parental_leaves(email_address):
-    try:
-        result = connection.execute(
-            text(f'INSERT INTO LeaveStats VALUES("Parental Leave", 30, 0, "{email_address}");')
-        )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
-    else:
-        pass
 
 def refersh_leave_record():
     now = datetime.datetime.now()
@@ -134,7 +112,7 @@ def refersh_leave_record():
         result = connection.execute(
             text(f'UPDATE LeaveRecord status="AVAILED" WHERE type=\'APPROVED\' and till_date>{date_now} and status=\'APPROVED\'";')
         )
-    except:
-        raise NotAuthoriseError('You are not authrised, please raise a request to register')
+    except Exception as exception:
+        print(exception)
     else:
-        pass
+        connection.commit()
