@@ -3,6 +3,7 @@ import json
 from aws_services.sqs.sqs import submit_request
 from exceptions.exceptions import SQSSendMessageError
 import sys
+import bcrypt 
     
 def user_action():
     option = input()
@@ -24,10 +25,12 @@ def create_form() -> dict:
     city = input(colored.yellow('Enter your city name: '))
     state = input(colored.yellow('Enter your state name: '))
     country = input(colored.yellow('Enter your country name: '))
-
+    salt = bcrypt.gensalt()
+    password_encoded = password.encode('utf-8') 
+    password_hash = bcrypt.hashpw(password_encoded, salt) 
     employee_details = {
             "email": email,
-            "password": password,
+            "password": password_hash,
             "first_name": first_name,
             "last_name": last_name,
             "position": position,

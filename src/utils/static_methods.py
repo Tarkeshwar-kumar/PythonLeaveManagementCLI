@@ -6,7 +6,7 @@ from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
 from db.Employee import Employees, Credentials, Address, session, Base, engine, Manager, LeaveStats
 import json
 from exceptions.exceptions import NoSuchEmployeeError, InValidRequest
-
+from constants.constants import leave_type_dict
 class AdminAction():
     @staticmethod
     def see_emp_details():
@@ -146,7 +146,8 @@ def create_employee(request):
 
     employee.address.append(address)
     employee.credential.append(cred)
-
+    for leave in create_leave_status():
+        employee.credential.append(leave)
     session.add(employee)
     session.commit()
 
@@ -156,7 +157,8 @@ def create_employee_detials(message):
         first_name = message['first_name'],
         last_name = message['last_name'],
         position = message['position'],
-        email_address = message['email']
+        email_address = message['email'],
+        manager_email = input("Enter manager's email id")
     )
     return employee
 
@@ -183,3 +185,14 @@ def create_manager(message):
         last_name = message['last_name']
     )
     return manager
+
+def create_leave_status():
+    leave_list = []
+    for key, value in leave_type_dict.items():
+        leave = LeaveStats(
+            type = key,
+            total = value,
+            availed = 0
+        )
+        leave_list.append(leave)
+    return leave_list

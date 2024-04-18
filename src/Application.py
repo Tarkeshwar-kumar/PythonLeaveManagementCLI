@@ -6,13 +6,15 @@ from auth.authentication import *
 from utils.adapter import choose_features
 from utils.mapping import *
 import datetime
+from getpass import getpass
 
 def get_credential() -> Credentials:
     email = input(colored.yellow('Enter your email address: '))
-    password = input(colored.yellow('Enter your password: '))
+    password = getpass(colored.yellow('Enter your password: '))
+    password_encoded = password.encode('utf-8') 
     credential = Credentials(
         email_id = email,
-        password = password
+        password = password_encoded
     )
     return credential
 

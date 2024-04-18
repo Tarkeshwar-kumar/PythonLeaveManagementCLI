@@ -36,7 +36,7 @@ def get_leave_record(email_address: Credentials.email_id):
     else:
         leave_record = result.fetchall()
         if not leave_record:
-            raise NoSuchEmployeeError(f"There is no employee with email id {email_address}")
+            raise NoSuchEmployeeError(f"There is no record for employee with email id {email_address}")
         else:
             return leave_record
 

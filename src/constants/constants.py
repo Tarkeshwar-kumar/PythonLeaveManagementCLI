@@ -5,3 +5,8 @@ region = "ap-south-1"
 account = "642916324385"
 sqs_name = "lms_add_emp_queue"
 sqs_endpoint = f"https://sqs.{region}.amazonaws.com/{account}/{sqs_name}"
+leave_type_dict = {
+    "Sick Leave": 10,
+    "Casual Leave": 12,
+    "Parental Leave": 30
+}

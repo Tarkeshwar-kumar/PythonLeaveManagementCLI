@@ -1,3 +1,8 @@
+password = "12345"
+password_encoded = password.encode('utf-8')
+salt = bcrypt.gensalt()
+password_hash = bcrypt.hashpw(password_encoded, salt) 
+
 manager1 = Manager(
     first_name = "David",
     last_name = "Morin",
@@ -45,7 +50,7 @@ cred1 = Credentials(
 
 cred2 = Credentials(
     email_id = "goyal@gmail.com",
-    password = "12345"
+    password = password_hash
 )
 # emp1.leave_status.append(leave1)
 emp1.address.append(address1)
