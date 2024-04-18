@@ -97,19 +97,34 @@ class PrivateAction():
         from_date= input(colored.yellow('Enter starting date of leave (YYYY-MM-DD)'))
         till_date= input(colored.yellow('Enter till date of leave (YYYY-MM-DD)'))
         number_of_days_on_leave = find_diffence_in_days(till_date, from_date)
-        if is_valid_leave_request(email_address, number_of_days_on_leave, leave_type):
-            apply_for_leave(email_address, leave_type, from_date, till_date)
-        
+        try:
+            if is_valid_leave_request(email_address, number_of_days_on_leave, leave_type):
+                apply_for_leave(email_address, leave_type, from_date, till_date)
+        except Exception as error:
+            print(error)
+        else:
+            puts(colored.green("Applied for leave successfully !!"))
+
 
     @staticmethod
     def cancel_applied_leaves(email_address):
         leave_type = input(colored.yellow('Enter leave type to cancel'))
-        cancel_leave(email_address, leave_type)
+        try:
+            cancel_leave(email_address, leave_type)
+        except Exception as error:
+            print(error)
+        else:
+            puts(colored.green("Applied for leave successfully !!"))
+        
 
     @staticmethod
-    def see_personal_leave(email_address):
-        employee_info = get_leave_record(email_address)
-        print(employee_info)
+    def get_personal_leave(email_address):
+        try:
+            leave_record = get_leave_record(email_address)
+        except (NoSuchEmployeeError, NotAuthoriseError) as exception:
+            print(exception)
+        else:
+            print(leave_record)
 
 def find_diffence_in_days(till_date, from_date):
     from_year, from_month, from_date = from_date.split("-")

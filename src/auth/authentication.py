@@ -10,6 +10,7 @@ def authenticate_user(credential: Credentials) -> Employees.position:
             text(f'SELECT password FROM Credentials WHERE email_id="{credential.email_id}";')
         )
         password = result.fetchall()
+        print(password)
         password = bytes.fromhex(password[0][0])
     except Exception:
         raise NotAuthoriseError('You are not authrised, please raise a request to register')
