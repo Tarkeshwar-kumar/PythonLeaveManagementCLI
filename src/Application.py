@@ -29,7 +29,6 @@ def login() -> Credentials:
     authenticate(credential)
 
 def authenticate(credential : Credentials) -> None :
-    position = "Unauthorised"
     try:        
         employee = authenticate_user(credential)  
         position = get_role(credential.email_id)
@@ -40,6 +39,6 @@ def authenticate(credential : Credentials) -> None :
     finally:
         choose_features(credential.email_id, position)
 
-
-welcome()
-login()
+if __name__ == "__main__":
+    welcome()
+    login()
