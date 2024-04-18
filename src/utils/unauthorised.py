@@ -27,7 +27,7 @@ def create_form() -> dict:
     country = input(colored.yellow('Enter your country name: '))
     salt = bcrypt.gensalt()
     password_encoded = password.encode('utf-8') 
-    password_hash = bcrypt.hashpw(password_encoded, salt) 
+    password_hash = bcrypt.hashpw(password_encoded, salt).hex()
     employee_details = {
             "email": email,
             "password": password_hash,

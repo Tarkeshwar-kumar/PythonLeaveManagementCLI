@@ -147,7 +147,7 @@ def create_employee(request):
     employee.address.append(address)
     employee.credential.append(cred)
     for leave in create_leave_status():
-        employee.credential.append(leave)
+        employee.leave_status.append(leave)
     session.add(employee)
     session.commit()
 
