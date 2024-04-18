@@ -3,13 +3,14 @@ from model.dbOperations import *
 from validators.validate import is_valid_leave_request, validate_request
 import datetime
 from aws_services.sqs.sqs import get_employee_request, delete_request_from_queue
-from db.Employee import Employees, Credentials, Address, session, Base, engine, Manager, LeaveStats
+from db.Employee import Employees, Credentials, Address, session, Manager, LeaveStats
 import json
 from exceptions.exceptions import NoSuchEmployeeError, InValidRequest
 from constants.constants import leave_type_dict
+
 class AdminAction():
     @staticmethod
-    def see_emp_details():
+    def get_emp_details():
         email_address = input(colored.yellow('Enter email address of the employee to get information'))
         try:
             employee_info = get_employee(email_address)
@@ -19,7 +20,7 @@ class AdminAction():
             print(employee_info)
     
     @staticmethod
-    def see_emp_leave_record():
+    def get_emp_leave_records():
         email_address = input(colored.yellow('Enter email address of employee '))
         try:
             leave_record = get_leave_record(email_address)
@@ -86,7 +87,7 @@ class AdminAction():
         
 class PrivateAction():
     @staticmethod
-    def see_personal_details(email_address):
+    def get_personal_details(email_address):
         employee_info = get_employee(email_address)
         print(employee_info)
 
@@ -122,22 +123,24 @@ def find_diffence_in_days(till_date, from_date):
 def process_request(ReceiptHandle, request):
     print("A -> Create Employee")
     print("B -> Reject request")
-    option = input("Choose option")
+    option = input("Choose action")
     if option == "A":
         try:
             json_request = json.loads(request)
             create_employee(json_request)
         except InValidRequest as exception:
-            print("Invalid request")
+            print(exception)
             delete_request_from_queue(ReceiptHandle)
-        except  Exception as err:
+        except Exception as err:
             print(err)
         else: 
             puts(colored.blue("User have been created"))
             delete_request_from_queue(ReceiptHandle)
-    else:
+    if option == "B":
         print("Request have been rejected") 
         delete_request_from_queue(ReceiptHandle)
+    else:
+        puts(colored.yellow('Invalid action'))
 
 def create_employee(request):
     address = create_address_details(request)
