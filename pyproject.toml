@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "LeaveManagement"
+version = "0.1.0"
+description = "Leave Management System"
+authors = ["Tarkeshwar Kumar"]
+readme = "README.md"
+packages = [{include = "LeaveManagement", from = "src"}]
+include = ["src"]
+exclude = ["src/**/*.pyc","__pycache__"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+SQLAlchemy = "2.0.29"
+clint = "0.5.1"
+pyfiglet = "1.0.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
