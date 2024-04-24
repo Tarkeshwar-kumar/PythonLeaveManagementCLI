@@ -13,6 +13,8 @@ python = "^3.10"
 SQLAlchemy = "2.0.29"
 clint = "0.5.1"
 pyfiglet = "1.0.2"
+pytest = "^8.1.1"
+black = "^24.4.0"
 
 
 [build-system]
